@@ -1,0 +1,23 @@
+services:
+  pbx:
+    image: ichikawayukko/asterisk:20.11alpine3.22
+    volumes:
+      - ./volume/certs/:/etc/letsencrypt/:z
+      - ./pjsip.conf:/etc/asterisk/pjsip.conf:ro
+      - ./pjsip_trunk_inbound.conf:/etc/asterisk/pjsip_trunk_inbound.conf:ro
+      - ./pjsip_trunk_outbound_interAZ.conf:/etc/asterisk/pjsip_trunk_outbound_interAZ.conf:ro
+      - ./pjsip_wizard.conf:/etc/asterisk/pjsip_wizard.conf:ro
+      - ./pjsip_wizard_snom.conf:/etc/asterisk/pjsip_wizard_snom.conf:ro
+      - ./extensions.conf:/etc/asterisk/extensions.conf:ro
+      - ./extensions_vault-tec.conf:/etc/asterisk/extensions_vault-tec.conf:ro
+      - ./extensions_test.conf:/etc/asterisk/extensions_test.conf:ro
+      - ./extensions_wrong_no.conf:/etc/asterisk/extensions_wrong_no.conf:ro
+      - ./musiconhold.conf:/etc/asterisk/musiconhold.conf:ro
+      - ./iax.conf:/etc/asterisk/iax.conf:ro
+    network_mode: host
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-file: '1'
+        max-size: 500m
